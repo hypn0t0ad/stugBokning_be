@@ -1,0 +1,18 @@
+CREATE TABLE CABIN (
+                       ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+                       NAME VARCHAR(255) NOT NULL,
+                       PRICE INTEGER NOT NULL,
+                       SIZE INTEGER NOT NULL,
+                       CREATED_AT TIMESTAMP NOT NULL,
+                       UPDATED TIMESTAMP,
+                       PRIMARY KEY (ID)
+);
+
+INSERT INTO CABIN (NAME, PRICE, SIZE, CREATED_AT)
+VALUES ('Big-cabin', 1000, 50, CURRENT_DATE);
+
+INSERT INTO CABIN (NAME, PRICE, SIZE, CREATED_AT)
+VALUES ('Middle-cabin', 750, 30, CURRENT_DATE);
+
+INSERT INTO CABIN (NAME, PRICE, SIZE, CREATED_AT)
+VALUES ('Lil-cabin', 500, 20, CURRENT_DATE);
