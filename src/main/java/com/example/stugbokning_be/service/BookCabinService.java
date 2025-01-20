@@ -4,6 +4,7 @@ import com.example.stugbokning_be.entity.BookingEntity;
 import com.example.stugbokning_be.entity.CabinEntity;
 import com.example.stugbokning_be.exception.NotFoundException;
 import com.example.stugbokning_be.model.BookCabinRequest;
+import com.example.stugbokning_be.model.BookingResponse;
 import com.example.stugbokning_be.model.VerifyCabinBookedResponse;
 import com.example.stugbokning_be.model.CabinResponse;
 import com.example.stugbokning_be.repository.BookingRepository;
@@ -52,6 +53,11 @@ public class BookCabinService {
         bookingRepository.save(newBooking);
         return new VerifyCabinBookedResponse(
                 newBooking.getCabin().toModel(), newBooking.getStart(), newBooking.getUntill());
+    }
+
+    public List<BookingResponse> allBookings() {
+        return bookingRepository.findAll().stream()
+                .map(e -> new BookingResponse(e.getCabin().toModel(), e.getStart(), e.getUntill())).toList();
     }
 
     private CabinResponse avaibleDatesForCabin(long id, LocalDate start, LocalDate untill) {

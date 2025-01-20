@@ -3,7 +3,6 @@ package com.example.stugbokning_be.controller;
 import com.example.stugbokning_be.model.BookCabinRequest;
 import com.example.stugbokning_be.model.VerifyCabinBookedResponse;
 import com.example.stugbokning_be.model.CabinResponse;
-import com.example.stugbokning_be.model.AvaibleDatesForCabinsRequest;
 import com.example.stugbokning_be.service.BookCabinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import java.util.List;
 public class BookCabinController {
 
     private final BookCabinService bookCabinService;
-
 
     @GetMapping("/all")
     public ResponseEntity<List<CabinResponse>> avaibleCabins() {

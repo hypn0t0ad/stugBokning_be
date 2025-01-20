@@ -1,7 +1,7 @@
 package com.example.stugbokning_be.controller;
 
-import com.example.stugbokning_be.model.*;
-import com.example.stugbokning_be.service.BookingService;
+import com.example.stugbokning_be.model.BookingResponse;
+import com.example.stugbokning_be.service.BookCabinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -9,21 +9,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/admin/v1")
+@RequestMapping("/admin/")
 @RequiredArgsConstructor
 @Validated
 @CrossOrigin(origins = "*")
 public class AdminController {
 
-    private final BookingService bookingService;
+    private final BookCabinService bookCabinService;
 
-    // log in
+    @GetMapping("/admin/hello")
+    public ResponseEntity<String> helloAdmin(){
+        return ResponseEntity.ok("Hello Admin");
+    }
 
-    // register
-
-    @GetMapping("/bookings")
-    public ResponseEntity<List<BokningResponse>> allaBokningar() {
-        return ResponseEntity.ok().body(bookingService.avaibleDatesForCabin());
+    @GetMapping("/allbookings")
+    public ResponseEntity<List<BookingResponse>> allBookings() {
+        List<BookingResponse> bookingResponses = bookCabinService.allBookings();
+        return ResponseEntity.ok(bookingResponses);
     }
 }
+
