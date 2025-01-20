@@ -1,8 +1,6 @@
 package com.example.stugbokning_be.model;
 
-public record AdminModel(
-        long id,
-        String name,
+public record LoginRequest(
         String username,
         String password
 ) {

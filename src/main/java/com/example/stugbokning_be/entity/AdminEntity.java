@@ -19,10 +19,14 @@ public class AdminEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "NAME", nullable = false)
+    private String name;
     @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
     @Column(name = "PASSWORD", nullable = false, unique = true)
     private String password;
+    @Column(name = "ROLE", nullable = false)
+    private String role;
     @CreationTimestamp
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
@@ -32,7 +36,7 @@ public class AdminEntity {
 
     public AdminModel toModel() {
         return new AdminModel(
-                this.id, this.username, this.password
+                this.id, this.name, this.username, this.password
         );
     }
 }
