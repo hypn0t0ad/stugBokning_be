@@ -7,5 +7,7 @@ CREATE TABLE ADMIN (
                        PRIMARY KEY (ID)
 );
 
+INSERT INTO ADMIN (USERNAME, PASSWORD, CREATED_AT) VALUES ('admin', 'admin', CURRENT_DATE);
+
 
 
