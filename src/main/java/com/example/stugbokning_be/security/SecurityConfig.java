@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -39,17 +38,19 @@ public class SecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/login").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/cabins/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cabins/book").permitAll()
-//                        .requestMatchers("/admin/register").hasAuthority("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-//                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+//                        .requestMatchers("/admin/bookings").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/admin/bookings").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginProcessingUrl("/admin/login")
-                        .successHandler(successHandler())
+                        .loginPage("/admin/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/admin/logout")
@@ -65,13 +66,6 @@ public class SecurityConfig{
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
         return authenticationManagerBuilder.build();
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler successHandler() {
-        return (request, response, authentication) -> {
-            response.sendRedirect("/admin/hello");
-        };
     }
 
     @Bean

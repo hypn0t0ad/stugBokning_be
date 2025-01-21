@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record BookingResponse(
         CabinModel cabinModel,
-        LocalDate fran,
-        LocalDate till
+        LocalDate start,
+        LocalDate until
 ) {
 }

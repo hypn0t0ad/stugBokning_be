@@ -5,6 +5,7 @@ import com.example.stugbokning_be.model.VerifyCabinBookedResponse;
 import com.example.stugbokning_be.model.CabinResponse;
 import com.example.stugbokning_be.service.BookCabinService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,8 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class BookCabinController {
 
-    private final BookCabinService bookCabinService;
+    @Autowired
+    private BookCabinService bookCabinService;
 
     @GetMapping("/all")
     public ResponseEntity<List<CabinResponse>> avaibleCabins() {
