@@ -1,6 +1,5 @@
 package com.example.stugbokning_be.entity;
 
-import com.example.stugbokning_be.model.AdminModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,10 +32,4 @@ public class AdminEntity {
     @UpdateTimestamp
     @Column(name = "UPDATED")
     private LocalDateTime updatedAt;
-
-    public AdminModel toModel() {
-        return new AdminModel(
-                this.id, this.name, this.username, this.password
-        );
-    }
 }

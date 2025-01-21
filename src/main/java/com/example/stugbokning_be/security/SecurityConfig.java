@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,12 +39,12 @@ public class SecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/cabins/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cabins/book").permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-//                        .requestMatchers("/admin/bookings").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/admin/bookings").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/admin/bookings").permitAll()
+                        .requestMatchers("/admin/view").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -53,8 +54,14 @@ public class SecurityConfig{
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/admin/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/admin/login?logout=true")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
         http.headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));

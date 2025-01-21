@@ -16,6 +16,7 @@ public class AdminTestSetup {
     @Autowired
     private AdminRepository adminRepository;
 
+    // Skapar upp en admin för test-syfte
     @Bean
     CommandLineRunner commandLineRunner(){
         return args -> {
