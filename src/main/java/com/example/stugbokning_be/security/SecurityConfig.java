@@ -44,6 +44,7 @@ public class SecurityConfig{
                         .requestMatchers(HttpMethod.POST, "/cabins/book").permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                         .requestMatchers(HttpMethod.GET, "/admin/bookings").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/admin/check-auth").permitAll()
                         .requestMatchers("/admin/view").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -55,7 +56,7 @@ public class SecurityConfig{
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/admin/login?logout=true")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
